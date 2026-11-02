@@ -58,7 +58,7 @@ test("the distribution and bundled plugins form one preview release", () => {
   }
 });
 
-test("deployment defaults and build commands use the distribution version", () => {
+test("published deployment defaults and build commands use the distribution version", () => {
   const image = `docleus:${pkg.version}`;
   for (const file of [
     "compose.small.yaml",
@@ -67,7 +67,6 @@ test("deployment defaults and build commands use the distribution version", () =
     "Dockerfile",
     "README.md",
     "DEPLOYMENT.md",
-    "RELEASING.md",
   ]) {
     const images = [
       ...readFileSync(join(root, file), "utf8").matchAll(

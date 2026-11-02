@@ -1,0 +1,80 @@
+# Standard deployment: Postgres and an S3-compatible object store.
+#   cp .env.example .env   # then set the secrets
+#   docker compose up -d
+services:
+  docleus:
+    image: ${DOCLEUS_IMAGE:-docleus:0.0.1}
+    init: true
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      s3-bucket:
+        condition: service_completed_successfully
+    ports:
+      - "${DOCLEUS_PORT:-3000}:3000"
+    environment:
+      DOCLEUS_DATABASE_URL: postgres://docleus:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@postgres:5432/docleus
+      DOCLEUS_PUBLIC_URL: ${DOCLEUS_PUBLIC_URL:-}
+      DOCLEUS_TRUST_PROXY: ${DOCLEUS_TRUST_PROXY:-}
+      DOCLEUS_SMTP_URL: ${DOCLEUS_SMTP_URL:-}
+      DOCLEUS_SMTP_FROM: ${DOCLEUS_SMTP_FROM:-}
+      DOCLEUS_OIDC_ISSUER: ${DOCLEUS_OIDC_ISSUER:-}
+      DOCLEUS_OIDC_CLIENT_ID: ${DOCLEUS_OIDC_CLIENT_ID:-}
+      DOCLEUS_OIDC_CLIENT_SECRET: ${DOCLEUS_OIDC_CLIENT_SECRET:-}
+      DOCLEUS_OIDC_LABEL: ${DOCLEUS_OIDC_LABEL:-}
+      DOCLEUS_S3_BUCKET: ${S3_BUCKET:-docleus}
+      DOCLEUS_S3_ENDPOINT: ${S3_ENDPOINT:-http://s3:9000}
+      DOCLEUS_S3_REGION: ${S3_REGION:-us-east-1}
+      DOCLEUS_S3_FORCE_PATH_STYLE: ${S3_FORCE_PATH_STYLE:-true}
+      DOCLEUS_S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY:?set S3_ACCESS_KEY}
+      DOCLEUS_S3_SECRET_ACCESS_KEY: ${S3_SECRET_KEY:?set S3_SECRET_KEY}
+      DOCLEUS_S3_SIGNING_SECRET: ${S3_SIGNING_SECRET:?set S3_SIGNING_SECRET (at least 32 characters)}
+    volumes:
+      # Installed plugins, the deployment config and backups.
+      - docleus-data:/data
+
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: docleus
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      POSTGRES_DB: docleus
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U docleus -d docleus"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  # TODO(S4): settle the S3 server image. RustFS is a placeholder; any
+  # S3-compatible store works, or drop this service and point S3_ENDPOINT
+  # at AWS S3, R2 or another hosted store.
+  s3:
+    image: ${S3_IMAGE:-rustfs/rustfs:latest}
+    restart: unless-stopped
+    environment:
+      RUSTFS_ACCESS_KEY: ${S3_ACCESS_KEY:?set S3_ACCESS_KEY}
+      RUSTFS_SECRET_KEY: ${S3_SECRET_KEY:?set S3_SECRET_KEY}
+    volumes:
+      - s3-data:/data
+
+  # Creates the bucket once; docleus-plugin-blobs-s3 expects it to exist.
+  s3-bucket:
+    image: ${DOCLEUS_IMAGE:-docleus:0.0.1}
+    depends_on:
+      - s3
+    entrypoint: ["node", "/opt/docleus/docleus/docker/create-bucket.mjs"]
+    environment:
+      S3_ENDPOINT: ${S3_ENDPOINT:-http://s3:9000}
+      S3_BUCKET: ${S3_BUCKET:-docleus}
+      S3_REGION: ${S3_REGION:-us-east-1}
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY:?set S3_ACCESS_KEY}
+      S3_SECRET_KEY: ${S3_SECRET_KEY:?set S3_SECRET_KEY}
+
+volumes:
+  docleus-data:
+  postgres-data:
+  s3-data:

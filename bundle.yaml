@@ -1,0 +1,27 @@
+# The default plugin set. package.json links the sibling source checkouts;
+# COMPATIBILITY.md records their versions. A deployment config (<data>/docleus.yaml) patches
+# these rows by id: it can enable a disabled row, set its config or disable it.
+- id: commonmark
+  plugin: ./node_modules/@docleus/plugin-blocks-commonmark
+- id: editor
+  plugin: ./node_modules/@docleus/plugin-editor
+- id: theme-default
+  plugin: ./node_modules/@docleus/plugin-theme-default
+- id: change-requests
+  plugin: ./node_modules/@docleus/plugin-change-requests
+- id: collab
+  plugin: ./node_modules/@docleus/plugin-collab
+- id: search-db
+  plugin: ./node_modules/@docleus/plugin-search-db
+- id: mermaid
+  plugin: ./node_modules/@docleus/plugin-mermaid
+- id: llms-txt
+  plugin: ./node_modules/@docleus/plugin-llms-txt
+# Needs `sources`; the image enables it from DOCLEUS_OIDC_* on every boot.
+- id: oidc
+  plugin: ./node_modules/@docleus/plugin-auth-oidc
+  disabled: true
+# Replaces <data>/blobs; the image enables it from DOCLEUS_S3_* on every boot.
+- id: blobs
+  plugin: ./node_modules/@docleus/plugin-blobs-s3
+  disabled: true

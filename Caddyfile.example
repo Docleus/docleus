@@ -1,0 +1,28 @@
+# Caddy in front of Docleus, with TLS from Let's Encrypt.
+# Set DOCLEUS_PUBLIC_URL=https://docs.example.com and DOCLEUS_TRUST_PROXY=true
+# so invitation links, secure cookies and client addresses are right.
+
+# The editor and the API.
+docs.example.com {
+	reverse_proxy docleus:3000
+}
+
+# A published site bound to its own domain (the site's `domain` setting).
+# Docleus picks the site by the Host header.
+handbook.example.com {
+	reverse_proxy docleus:3000
+}
+
+# Or let Caddy issue certificates on demand for any domain a site binds.
+# Caddy asks `ask` (an endpoint you provide; Docleus has none yet) first:
+# {
+# 	on_demand_tls {
+# 		ask http://approver:8080/allowed
+# 	}
+# }
+# https:// {
+# 	tls {
+# 		on_demand
+# 	}
+# 	reverse_proxy docleus:3000
+# }

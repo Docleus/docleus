@@ -1,0 +1,79 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      '@docleus/cli':
+        specifier: link:../docleus-core/packages/cli
+        version: link:../docleus-core/packages/cli
+      '@docleus/plugin-auth-oidc':
+        specifier: link:../docleus-plugin-auth-oidc
+        version: link:../docleus-plugin-auth-oidc
+      '@docleus/plugin-blobs-s3':
+        specifier: link:../docleus-plugin-blobs-s3
+        version: link:../docleus-plugin-blobs-s3
+      '@docleus/plugin-blocks-commonmark':
+        specifier: link:../docleus-plugin-blocks-commonmark
+        version: link:../docleus-plugin-blocks-commonmark
+      '@docleus/plugin-change-requests':
+        specifier: link:../docleus-plugin-change-requests
+        version: link:../docleus-plugin-change-requests
+      '@docleus/plugin-collab':
+        specifier: link:../docleus-plugin-collab
+        version: link:../docleus-plugin-collab
+      '@docleus/plugin-editor':
+        specifier: link:../docleus-plugin-editor
+        version: link:../docleus-plugin-editor
+      '@docleus/plugin-llms-txt':
+        specifier: link:../docleus-plugin-llms-txt
+        version: link:../docleus-plugin-llms-txt
+      '@docleus/plugin-mermaid':
+        specifier: link:../docleus-plugin-mermaid
+        version: link:../docleus-plugin-mermaid
+      '@docleus/plugin-search-db':
+        specifier: link:../docleus-plugin-search-db
+        version: link:../docleus-plugin-search-db
+      '@docleus/plugin-theme-default':
+        specifier: link:../docleus-plugin-theme-default
+        version: link:../docleus-plugin-theme-default
+      '@docleus/server':
+        specifier: link:../docleus-core/packages/server
+        version: link:../docleus-core/packages/server
+    devDependencies:
+      '@playwright/test':
+        specifier: 1.64.1
+        version: 1.64.1
+
+packages:
+
+  '@playwright/test@1.64.1':
+    resolution: {integrity: sha512-IaYGml/nSOiZWROfPtuIL7neuu9qDOZ3TNvNljUIrhDMxiGTgPjzj/g9p9RxpS2tSepPDRY+UwAaEeiKtUvIAg==}
+    engines: {node: '>=20'}
+    hasBin: true
+
+  playwright-core@1.64.1:
+    resolution: {integrity: sha512-BC4s8y6SEVA6Q1rSxZTto8hI1KUI3xXlHGZgvGqP4IqPdI/a6FX9H29IDNz7vKo9l21b6LfYosScPL6M3xxyDQ==}
+    engines: {node: '>=20'}
+    hasBin: true
+
+  playwright@1.64.1:
+    resolution: {integrity: sha512-HCrVhHr5QQuwYoswEUGTb7gGp522yflbv/ST8nF4sFWGuLjQCt17Q/EubpGGSNKYn1tsTCPZxqHhHCfVURu7UA==}
+    engines: {node: '>=20'}
+    hasBin: true
+
+snapshots:
+
+  '@playwright/test@1.64.1':
+    dependencies:
+      playwright: 1.64.1
+
+  playwright-core@1.64.1: {}
+
+  playwright@1.64.1:
+    dependencies:
+      playwright-core: 1.64.1

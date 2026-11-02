@@ -1,0 +1,48 @@
+{
+  "name": "docleus",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Docleus distribution: Docker image, compose templates and the default plugin set.",
+  "license": "MIT",
+  "packageManager": "pnpm@11.21.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "exports": {
+    "./bundle.yaml": "./bundle.yaml"
+  },
+  "scripts": {
+    "serve": "pnpm --dir ../docleus-core docleus serve --bundle ../docleus/bundle.yaml",
+    "image": "docker build -f Dockerfile -t docleus:0.0.1 ..",
+    "smoke": "node scripts/smoke.mjs",
+    "e2e": "playwright test",
+    "test": "node --test tests/*.test.mjs",
+    "check": "pnpm test"
+  },
+  "dependencies": {
+    "@docleus/cli": "link:../docleus-core/packages/cli",
+    "@docleus/plugin-auth-oidc": "link:../docleus-plugin-auth-oidc",
+    "@docleus/plugin-blobs-s3": "link:../docleus-plugin-blobs-s3",
+    "@docleus/plugin-blocks-commonmark": "link:../docleus-plugin-blocks-commonmark",
+    "@docleus/plugin-change-requests": "link:../docleus-plugin-change-requests",
+    "@docleus/plugin-collab": "link:../docleus-plugin-collab",
+    "@docleus/plugin-editor": "link:../docleus-plugin-editor",
+    "@docleus/plugin-llms-txt": "link:../docleus-plugin-llms-txt",
+    "@docleus/plugin-mermaid": "link:../docleus-plugin-mermaid",
+    "@docleus/plugin-search-db": "link:../docleus-plugin-search-db",
+    "@docleus/plugin-theme-default": "link:../docleus-plugin-theme-default",
+    "@docleus/server": "link:../docleus-core/packages/server"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Docleus/docleus.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Docleus/docleus/issues"
+  },
+  "homepage": "https://github.com/Docleus/docleus#readme"
+}

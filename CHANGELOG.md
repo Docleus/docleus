@@ -1,10 +1,11 @@
 # Changelog
 
-## Unreleased - 0.0.1 preparation
+## 0.0.1 - 2026-11-03
 
-The first public release is being prepared. No release date or published image
-is claimed here. Follow [docleus.io](https://docleus.io) for documentation and
-release information.
+The first public preview provides a complete source archive and independently
+versioned core and plugin releases. Container delivery follows the source
+publication; availability, supported platforms, and the immutable image digest
+are recorded in the release's `container-0.0.1.json` asset.
 
 ### Included scope
 
@@ -23,6 +24,9 @@ release information.
 - Correct deployment-config examples to use plugin rows with stable ids.
 - Add shared CI callers and community contribution/reporting templates.
 - Keep the current page visible in the navigation tree when it or an ancestor is moved.
+- Add a manual container publication workflow using frozen source and base-image pins, with native AMD64/ARM64 acceptance before version tagging.
+- Let Compose use the prebuilt GHCR image by default, with a local-image override.
+- Verify published content and the admin session after a container restart in the Compose smoke test.
 
 ### Limitations
 

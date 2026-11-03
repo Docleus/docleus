@@ -1,10 +1,9 @@
 # Small deployment: one container, SQLite and local files in a volume.
 #   docker compose -f compose.small.yaml up -d
-# Build the image first from the workspace root (see README), or set
-# DOCLEUS_IMAGE to a published one.
+# DOCLEUS_IMAGE can pin an image digest or select a local source build.
 services:
   docleus:
-    image: ${DOCLEUS_IMAGE:-docleus:0.0.1}
+    image: ${DOCLEUS_IMAGE:-ghcr.io/docleus/docleus:0.0.1}
     init: true
     restart: unless-stopped
     ports:

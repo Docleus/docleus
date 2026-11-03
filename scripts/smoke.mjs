@@ -144,6 +144,17 @@ async function run() {
     );
   }
   log(`GET ${site.url} returned the page`);
+
+  compose("restart", "docleus");
+  const restored = await waitFor("the publication after restart", async () => {
+    const response = await fetch(`${origin}${site.url}`);
+    return response.ok ? response.text() : undefined;
+  });
+  if (!restored.includes(text)) {
+    throw new Error("the published page did not survive the container restart");
+  }
+  await api("GET", `${sites}/${site.id}/publications`);
+  log("the publication and admin session survived a container restart");
 }
 
 let failed = false;

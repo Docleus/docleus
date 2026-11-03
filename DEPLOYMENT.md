@@ -32,17 +32,54 @@ organization does not use under Settings, Plugins.
 
 ## Build the image
 
-Run from a workspace root, where every repository sits side by side:
+The prebuilt image needs no source checkout. Once the release includes
+`container-0.0.1.json`, download `compose.small.yaml` from the same release and
+run `docker compose -f compose.small.yaml pull`. The default image is
+`ghcr.io/docleus/docleus:0.0.1`; the container record's `reference` pins its digest.
+
+To build locally, download the complete `docleus-0.0.1-sources.tar.gz` release
+asset and verify it against `SHA256SUMS`. GitHub's automatic source archives
+contain only this repository and cannot build the image. Extract the complete
+asset, then run from its root, where every repository sits side by side:
 
 ```sh
 docker build -f docleus/Dockerfile -t docleus:0.0.1 .
 # behind a registry mirror:
 docker build -f docleus/Dockerfile --build-arg NPM_REGISTRY=https://registry.npmmirror.com -t docleus:0.0.1 .
+export DOCLEUS_IMAGE=docleus:0.0.1
+cd docleus
 ```
+
+The explicit `DOCLEUS_IMAGE` selects your local build instead of the registry
+default in the Compose files.
+
+## Container release workflow
+
+Maintainers run **Publish container** manually in GitHub Actions from the
+reviewed `main` commit. `container-release.json` pins the approved source archive
+checksum, distribution source commit, and Node base image digest. The workflow
+downloads that archive from the matching release, so current sibling branches
+cannot change the release's product sources.
+
+Native Linux AMD64 and ARM64 runners each build an image, run the small Compose
+smoke including restart persistence, and push the tested image under a candidate
+tag. Only after both pass does the workflow assemble `ghcr.io/docleus/docleus:0.0.1`.
+It uploads `container-0.0.1.json`, Compose files, `.env.example`, and
+`container-SHA256SUMS` to the release. The original source assets stay unchanged.
+The workflow refuses to replace an existing container record. Release metadata
+records the source commit and the separate workflow commit.
+
+The workflow uses GitHub's job token with `packages: write`; maintainers do not
+need a personal registry token. On the first publication, check the GHCR package
+visibility and set it to public if necessary. The workflow logs out and pulls
+both platforms anonymously before uploading the container record; a private
+package stops this final step. There is no
+`latest` tag, and a public source preview alone does not promise a container.
 
 ## Small deployment
 
 ```sh
+docker compose -f compose.small.yaml pull
 docker compose -f compose.small.yaml up -d
 docker compose -f compose.small.yaml logs docleus   # prints the setup token
 ```
@@ -152,7 +189,7 @@ node scripts/smoke.mjs                       # compose.small.yaml on port 3900
 node scripts/smoke.mjs --file compose.yaml   # needs the variables of .env.example
 ```
 
-It starts the compose file under its own project name, creates the admin with the setup token, an organization, a space and a page (through a change request), publishes a site, checks the page is served, and removes the project with its volumes (`--keep` leaves it running).
+It starts the compose file under its own project name, creates the admin with the setup token, an organization, a space and a page (through a change request), publishes a site, checks the page is served, restarts the container, checks that the publication and admin session survive, and removes the project with its volumes (`--keep` leaves it running).
 
 ## End-to-end test
 

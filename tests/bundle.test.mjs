@@ -81,3 +81,21 @@ test("published deployment defaults and build commands use the distribution vers
   }
   assert.ok(pkg.scripts.image.includes(`-t ${image} `));
 });
+
+test("Compose can start from a registry image without sibling sources", () => {
+  const image = `ghcr.io/docleus/docleus:${pkg.version}`;
+  for (const file of ["compose.small.yaml", "compose.yaml"]) {
+    const source = readFileSync(join(root, file), "utf8");
+    const defaults = [
+      ...source.matchAll(/^\s+image: \$\{DOCLEUS_IMAGE:-(.+)\}$/gm),
+    ];
+    assert.equal(defaults.length, file === "compose.yaml" ? 2 : 1);
+    for (const reference of defaults) assert.equal(reference[1], image);
+    assert.doesNotMatch(source, /^\s+build:/m);
+  }
+  assert.ok(
+    readFileSync(join(root, ".env.example"), "utf8")
+      .split("\n")
+      .includes(`DOCLEUS_IMAGE=${image}`),
+  );
+});

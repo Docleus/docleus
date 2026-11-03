@@ -152,6 +152,8 @@ jobs:
               echo 'Anonymous pull failed. Check GHCR package visibility before rerunning this workflow.' >&2
               exit 1
             fi
+            # The classic Docker store cannot keep two platforms under one index reference.
+            docker image rm "$IMAGE@$digest"
           done
           node --input-type=module <<'JS'
           import assert from 'node:assert/strict';

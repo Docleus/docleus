@@ -64,7 +64,7 @@ cannot change the release's product sources.
 Native Linux AMD64 and ARM64 runners each build an image, run the small Compose
 smoke including restart persistence, and push the tested image under a candidate
 tag. Only after both pass does the workflow assemble `ghcr.io/docleus/docleus:0.0.1`.
-It uploads `container-0.0.1.json`, Compose files, `.env.example`, and
+It uploads `container-0.0.1.json`, Compose files, `default.env.example`, and
 `container-SHA256SUMS` to the release. The original source assets stay unchanged.
 The workflow refuses to replace an existing container record. Release metadata
 records the source commit and the separate workflow commit.
@@ -96,6 +96,10 @@ Open `http://localhost:3000/setup`, enter the token and create the first admin. 
 | `blob-secret`               | Signs blob URLs, unless `DOCLEUS_BLOB_SECRET` is set                                  |
 
 ## Standard deployment
+
+Download `compose.yaml` and `default.env.example` from the release. Copy the
+downloaded environment template to `.env`. From a source checkout, the same
+template is named `.env.example`:
 
 ```sh
 cp .env.example .env    # set POSTGRES_PASSWORD, S3_ACCESS_KEY, S3_SECRET_KEY, S3_SIGNING_SECRET

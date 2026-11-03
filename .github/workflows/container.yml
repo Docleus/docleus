@@ -177,9 +177,10 @@ jobs:
           };
           writeFileSync(`container-${pins.version}.json`, `${JSON.stringify(record, null, 2)}\n`);
           JS
-          sha256sum "container-$version.json" compose.small.yaml compose.yaml .env.example > container-SHA256SUMS
+          cp .env.example default.env.example
+          sha256sum "container-$version.json" compose.small.yaml compose.yaml default.env.example > container-SHA256SUMS
           gh release upload "v$version" --repo "$GITHUB_REPOSITORY" \
-            compose.small.yaml compose.yaml .env.example container-SHA256SUMS --clobber
+            compose.small.yaml compose.yaml default.env.example container-SHA256SUMS --clobber
           gh release upload "v$version" --repo "$GITHUB_REPOSITORY" "container-$version.json"
           gh release view "v$version" --repo "$GITHUB_REPOSITORY" --json body > release.json
           node --input-type=module <<'JS'

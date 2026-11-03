@@ -110,8 +110,8 @@ The standard compose file uses Postgres and an S3-compatible store:
 
 ```sh
 curl -fLO https://github.com/Docleus/docleus/releases/download/v0.0.1/compose.yaml
-curl -fLO https://github.com/Docleus/docleus/releases/download/v0.0.1/.env.example
-cp .env.example .env
+curl -fLO https://github.com/Docleus/docleus/releases/download/v0.0.1/default.env.example
+cp default.env.example .env
 # Set POSTGRES_PASSWORD, S3_ACCESS_KEY, S3_SECRET_KEY, and S3_SIGNING_SECRET.
 docker compose up -d
 ```

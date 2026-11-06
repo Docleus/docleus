@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { test } from "node:test";
+import { checkComponentCompatibility } from "../scripts/component-compatibility.mjs";
 
 const root = join(import.meta.dirname, "..");
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
@@ -27,14 +28,20 @@ test("every bundle row points at an installed plugin with a manifest", () => {
   }
 });
 
-test("the distribution and bundled plugins form one preview release", () => {
+test("the distribution contains compatible core and plugin releases", () => {
   const server = JSON.parse(
     readFileSync(
       join(root, "node_modules/@docleus/server/package.json"),
       "utf8",
     ),
   );
-  assert.equal(pkg.version, server.version);
+  const sdk = JSON.parse(
+    readFileSync(
+      join(root, "../docleus-core/packages/sdk/package.json"),
+      "utf8",
+    ),
+  );
+  const plugins = [];
   for (const name of rows) {
     const pluginRoot = join(root, "node_modules", name);
     const plugin = JSON.parse(
@@ -43,19 +50,9 @@ test("the distribution and bundled plugins form one preview release", () => {
     const manifest = JSON.parse(
       readFileSync(join(pluginRoot, "docleus.plugin.json"), "utf8"),
     );
-    assert.equal(plugin.version, pkg.version, `${name}: package version`);
-    assert.equal(manifest.version, pkg.version, `${name}: manifest version`);
-    assert.equal(
-      manifest.engines.docleus,
-      `^${pkg.version}`,
-      `${name}: platform range`,
-    );
-    assert.equal(
-      plugin.peerDependencies["@docleus/sdk"],
-      `^${pkg.version}`,
-      `${name}: SDK range`,
-    );
+    plugins.push({ pkg: plugin, manifest });
   }
+  assert.deepEqual(checkComponentCompatibility(pkg, server, sdk, plugins), []);
 });
 
 test("published deployment defaults and build commands use the distribution version", () => {

@@ -55,8 +55,12 @@ default in the Compose files.
 
 ## Container release workflow
 
-Maintainers run **Publish container** manually in GitHub Actions from the
-reviewed `main` commit. `container-release.json` pins the approved source archive
+Maintainers run **Validate or publish container** manually in GitHub Actions from
+the reviewed `main` commit. The default `publish: false` builds and tests both
+architectures without logging in to the registry, pushing images, uploading
+workflow artifacts, or changing a release. Set `publish: true` only after the
+publication has been explicitly approved; that run rebuilds and tests before
+publishing. `container-release.json` pins the approved source archive
 checksum, distribution source commit, and Node base image digest. The workflow
 downloads that archive from the matching release, so current sibling branches
 cannot change the release's product sources.

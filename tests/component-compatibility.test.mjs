@@ -68,6 +68,21 @@ test("refuses missing compatibility declarations", () => {
   );
 });
 
+for (const range of ["0.0.1 - 0.0.6", "~>0.0.1", "||"]) {
+  test(`rejects range syntax unsupported by the platform: ${range}`, () => {
+    assert.equal(
+      check({
+        pkg: {
+          ...PLUGIN.pkg,
+          peerDependencies: { "@docleus/sdk": range },
+        },
+        manifest: { ...PLUGIN.manifest, engines: { docleus: range } },
+      }).length,
+      2,
+    );
+  });
+}
+
 test("does not infer compatibility from matching component versions", () => {
   assert.equal(
     check(PLUGIN, { version: "0.0.7" }, { version: "0.0.7" }).length,

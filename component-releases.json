@@ -1,0 +1,114 @@
+{
+  "formatVersion": 1,
+  "distributionVersion": "0.0.2",
+  "components": [
+    {
+      "repository": "Docleus/docleus-core",
+      "version": "0.0.2",
+      "tag": "v0.0.2",
+      "sourceCommit": "e79105e9ff346eadf72998e5d2061be79b2d86dc",
+      "sourceTree": "7132333ceb639bad83938fb07202132bd291b9fd",
+      "releaseUrl": "https://github.com/Docleus/docleus-core/releases/tag/v0.0.2",
+      "componentMetadataSha256": "37dee559f1a6aa18016cc48ba7bd4e7c567f27a8345f22305b4fc3faa03bff2f"
+    },
+    {
+      "repository": "Docleus/docleus-plugin-template",
+      "version": "0.0.2",
+      "tag": "v0.0.2",
+      "sourceCommit": "fbc748fdf444e157b9eb47d05cb2fafa4545db14",
+      "sourceTree": "93941793a07199d627744ac9ec61dc3b0210891f",
+      "releaseUrl": "https://github.com/Docleus/docleus-plugin-template/releases/tag/v0.0.2",
+      "componentMetadataSha256": "2be596ece7d5b6e2eb9b114fcd84b9e7da9a34eceb15c7e27c2db63ac5c0eb85"
+    },
+    {
+      "repository": "Docleus/docleus-plugin-blocks-commonmark",
+      "version": "0.0.2",
+      "tag": "v0.0.2",
+      "sourceCommit": "40f8f764fa7d93e9c24476c1198a34dc338bc9be",
+      "sourceTree": "998a1bb8b99499ed8761af6e03298d8dc00bceb5",
+      "releaseUrl": "https://github.com/Docleus/docleus-plugin-blocks-commonmark/releases/tag/v0.0.2",
+      "componentMetadataSha256": "e6834dcd91e769e075e9062cc49b1834e523330cb0fc142b81861e19edfed677"
+    },
+    {
+      "repository": "Docleus/docleus-plugin-editor",
+      "version": "0.0.2",
+      "tag": "v0.0.2",
+      "sourceCommit": "556ce072ae80f553a1eaab4058d48e29580171df",
+      "sourceTree": "a84a7365f888c39518f069ddb23ebe13e5953022",
+      "releaseUrl": "https://github.com/Docleus/docleus-plugin-editor/releases/tag/v0.0.2",
+      "componentMetadataSha256": "6240a97be7018dac3e8b009782e54cc5e405f28e428cbae5ed4ef7fb3489ca60"
+    },
+    {
+      "repository": "Docleus/docleus-plugin-theme-default",
+      "version": "0.0.2",
+      "tag": "v0.0.2",
+      "sourceCommit": "bf58c05c59c98c001a4e0c427ee1d04aa422f78e",
+      "sourceTree": "0a5478ed91762d5d5da1009f204023e1ae465167",
+      "releaseUrl": "https://github.com/Docleus/docleus-plugin-theme-default/releases/tag/v0.0.2",
+      "componentMetadataSha256": "828471179bb6f4412c0f6e0b0a261573ac9b421bc8a895896117a948a7cb2682"
+    },
+    {
+      "repository": "Docleus/docleus-plugin-auth-oidc",
+      "version": "0.0.2",
+      "tag": "v0.0.2",
+      "sourceCommit": "6d46a40108a9d647004f5bb052aa16e82d531c32",
+      "sourceTree": "7e61361b301b20337329d203fb4925d88e974251",
+      "releaseUrl": "https://github.com/Docleus/docleus-plugin-auth-oidc/releases/tag/v0.0.2",
+      "componentMetadataSha256": "99d5d4aa07be565cdf66bff75f8a6085178457fc742f453da0814e24e64e1e3f"
+    },
+    {
+      "repository": "Docleus/docleus-plugin-change-requests",
+      "version": "0.0.2",
+      "tag": "v0.0.2",
+      "sourceCommit": "bb673de06a99392fc0a72537638ff14c80ba0e84",
+      "sourceTree": "cadd2dc3a913e1858b379ba64d3f4ccdf3c4f4f2",
+      "releaseUrl": "https://github.com/Docleus/docleus-plugin-change-requests/releases/tag/v0.0.2",
+      "componentMetadataSha256": "2bd5d30cbd75ad5e4fbcd93f298129c8a40c3bba2a615da8bae570b2042f196c"
+    },
+    {
+      "repository": "Docleus/docleus-plugin-collab",
+      "version": "0.0.2",
+      "tag": "v0.0.2",
+      "sourceCommit": "711211c30934f80df3bfef2dab619e1a573f7da2",
+      "sourceTree": "4261439f584c1d0a7591684b314a381135558398",
+      "releaseUrl": "https://github.com/Docleus/docleus-plugin-collab/releases/tag/v0.0.2",
+      "componentMetadataSha256": "579e4b627a53d0afc92c545952e2a5b99c282835188ad13088918d5ad326f0f5"
+    },
+    {
+      "repository": "Docleus/docleus-plugin-search-db",
+      "version": "0.0.2",
+      "tag": "v0.0.2",
+      "sourceCommit": "2ae1ec148dabb06979aa627ef55a2481293bd716",
+      "sourceTree": "4387b054643f67b544dd6cf95968a61e63ba205f",
+      "releaseUrl": "https://github.com/Docleus/docleus-plugin-search-db/releases/tag/v0.0.2",
+      "componentMetadataSha256": "a4f9beb5df1354e632cb3525bf1c1fb9617e1bc20e77e81a238ece638129ea21"
+    },
+    {
+      "repository": "Docleus/docleus-plugin-blobs-s3",
+      "version": "0.0.2",
+      "tag": "v0.0.2",
+      "sourceCommit": "bf652a787b85030dc3396175dad2878801405a6a",
+      "sourceTree": "2c4564f3a36037b86708fac25e51c8bae85e2627",
+      "releaseUrl": "https://github.com/Docleus/docleus-plugin-blobs-s3/releases/tag/v0.0.2",
+      "componentMetadataSha256": "74072627d2513b8736947688d2df1b6992d647e80690c1bc8835987edaf4fde9"
+    },
+    {
+      "repository": "Docleus/docleus-plugin-mermaid",
+      "version": "0.0.2",
+      "tag": "v0.0.2",
+      "sourceCommit": "4f0df599b07a7cd7fc32b4a73f8e152bb9d45ad5",
+      "sourceTree": "739658e42bbf80004b11e83f402cf3df2037a1e6",
+      "releaseUrl": "https://github.com/Docleus/docleus-plugin-mermaid/releases/tag/v0.0.2",
+      "componentMetadataSha256": "3add43d43fa072f082dac94eaf2ac7d58d911abf89ac8ca1e123051743f54ee4"
+    },
+    {
+      "repository": "Docleus/docleus-plugin-llms-txt",
+      "version": "0.0.2",
+      "tag": "v0.0.2",
+      "sourceCommit": "34bfe4258109965b65a3891c36183ed2defdf9c9",
+      "sourceTree": "0c5b5c7e1afd1b9591a30f95b8802815613e742b",
+      "releaseUrl": "https://github.com/Docleus/docleus-plugin-llms-txt/releases/tag/v0.0.2",
+      "componentMetadataSha256": "a39cfc8f503ef69a1376a0bcbd24e0d783edbc6398afbe340575aa2d5fce307b"
+    }
+  ]
+}

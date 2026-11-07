@@ -21,6 +21,7 @@ relying on a development build's size.
 | `scripts/smoke.mjs`                     | End-to-end smoke test of a compose file                                             |
 | `tests/e2e/`, `playwright.config.ts`    | Browser test of the whole product against the default bundle                        |
 | `COMPATIBILITY.md`                      | The plugins checked against this core, written by the maintainers' `scripts/compat` |
+| `component-releases.json`               | Exact component release commits, Git trees, and metadata checksums for this source set |
 
 ## Default plugins
 
@@ -33,20 +34,20 @@ organization does not use under Settings, Plugins.
 ## Build the image
 
 The prebuilt image needs no source checkout. Once the release includes
-`container-0.0.1.json`, download `compose.small.yaml` from the same release and
+`container-0.0.2.json`, download `compose.small.yaml` from the same release and
 run `docker compose -f compose.small.yaml pull`. The default image is
-`ghcr.io/docleus/docleus:0.0.1`; the container record's `reference` pins its digest.
+`ghcr.io/docleus/docleus:0.0.2`; the container record's `reference` pins its digest.
 
-To build locally, download the complete `docleus-0.0.1-sources.tar.gz` release
+To build locally, download the complete `docleus-0.0.2-sources.tar.gz` release
 asset and verify it against `SHA256SUMS`. GitHub's automatic source archives
 contain only this repository and cannot build the image. Extract the complete
 asset, then run from its root, where every repository sits side by side:
 
 ```sh
-docker build -f docleus/Dockerfile -t docleus:0.0.1 .
+docker build -f docleus/Dockerfile -t docleus:0.0.2 .
 # behind a registry mirror:
-docker build -f docleus/Dockerfile --build-arg NPM_REGISTRY=https://registry.npmmirror.com -t docleus:0.0.1 .
-export DOCLEUS_IMAGE=docleus:0.0.1
+docker build -f docleus/Dockerfile --build-arg NPM_REGISTRY=https://registry.npmmirror.com -t docleus:0.0.2 .
+export DOCLEUS_IMAGE=docleus:0.0.2
 cd docleus
 ```
 
@@ -65,10 +66,16 @@ checksum, distribution source commit, and Node base image digest. The workflow
 downloads that archive from the matching release, so current sibling branches
 cannot change the release's product sources.
 
+The existing `container-release.json` records the published `0.0.1` source set.
+After the `0.0.2` distribution PR merges and its complete source archive is
+assembled, update that record in a separately reviewed change with the exact
+distribution source commit and archive checksum before running this workflow
+for `0.0.2`. Finalize both values from that merged source snapshot.
+
 Native Linux AMD64 and ARM64 runners each build an image, run the small Compose
 smoke including restart persistence, and push the tested image under a candidate
-tag. Only after both pass does the workflow assemble `ghcr.io/docleus/docleus:0.0.1`.
-It uploads `container-0.0.1.json`, Compose files, `default.env.example`, and
+tag. Only after both pass does the workflow assemble `ghcr.io/docleus/docleus:0.0.2`.
+It uploads `container-0.0.2.json`, Compose files, `default.env.example`, and
 `container-SHA256SUMS` to the release. The original source assets stay unchanged.
 The workflow refuses to replace an existing container record. Release metadata
 records the source commit and the separate workflow commit.

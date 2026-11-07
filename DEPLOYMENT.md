@@ -66,11 +66,11 @@ checksum, distribution source commit, and Node base image digest. The workflow
 downloads that archive from the matching release, so current sibling branches
 cannot change the release's product sources.
 
-The existing `container-release.json` records the published `0.0.1` source set.
-After the `0.0.2` distribution PR merges and its complete source archive is
-assembled, update that record in a separately reviewed change with the exact
-distribution source commit and archive checksum before running this workflow
-for `0.0.2`. Finalize both values from that merged source snapshot.
+`container-release.json` now pins the published `0.0.2` complete source archive
+and its exact distribution source commit. The workflow commit can advance to
+record those pins while the product sources remain frozen in that archive.
+The pinned Node base image is unchanged. Image validation and publication still
+require their own explicitly approved workflow runs.
 
 Native Linux AMD64 and ARM64 runners each build an image, run the small Compose
 smoke including restart persistence, and push the tested image under a candidate

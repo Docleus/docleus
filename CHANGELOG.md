@@ -1,6 +1,21 @@
 # Changelog
 
-## 0.0.3 - Unreleased
+## 0.0.4 - Unreleased
+
+### Patch fixes
+
+- Restore runtime plugins, deployment configuration and frontend state when installation, replacement or uninstall database writes fail.
+
+### Packages and source set
+
+- Use core and all twenty core packages at 0.0.4, with the exact official plugin/template versions in `component-releases.json`.
+- Pin actual component commits, Git trees, release URLs and verified metadata checksums.
+- Record verified plugin platform/SDK ranges: `>=0.0.1 <0.0.5`.
+- Update distribution metadata, Compose/image defaults, build examples and the generated compatibility matrix for 0.0.4.
+
+Container source pins and native image acceptance/publication follow the frozen source archive. npm packages remain private and unpublished.
+
+## 0.0.3 - 2026-11-08
 
 ### Patch fixes
 

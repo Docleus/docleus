@@ -197,7 +197,7 @@ OIDC and S3 are included but disabled until configured. Verify the exact core an
 
 ## Status
 
-The first `0.0.1` preview was released on November 3, 2026. Patch `0.0.5` restores runtime plugins, deployment configuration and frontend state when installation, replacement or uninstall database writes fail. Container delivery is recorded separately in the release's container assets.
+The first `0.0.1` preview was released on November 3, 2026. Patch `0.0.5` stops stale plugin installation, replacement and uninstall mutations after lease ownership or renewal loss, and preserves runtime storage handoffs that reopen the same database. Container delivery is recorded separately in the release's container assets.
 
 Git Sync, a stable plugin SDK, collections, AI/MCP features, and visitor-aware
 publishing are planned for later phases. Roadmap details will be published in

@@ -1,6 +1,21 @@
 # Changelog
 
-## 0.0.4 - Unreleased
+## 0.0.5 - Unreleased
+
+### Patch fixes
+
+- Lease checks that stop stale plugin installation, replacement and uninstall mutations after ownership or renewal loss, while preserving same-database runtime storage handoffs.
+
+### Packages and source set
+
+- Use core and all twenty core packages at 0.0.6, with the exact official plugin/template versions in `component-releases.json`.
+- Pin actual component commits, Git trees, release URLs and verified metadata checksums.
+- Record verified plugin platform/SDK ranges: `>=0.0.1 <0.0.7`.
+- Update distribution metadata, Compose/image defaults, build examples and the generated compatibility matrix for 0.0.5.
+
+Container source pins and native image acceptance/publication follow the frozen source archive. npm packages remain private and unpublished.
+
+## 0.0.4 - 2026-11-09
 
 ### Patch fixes
 

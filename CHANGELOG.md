@@ -1,6 +1,24 @@
 # Changelog
 
-## 0.0.2 - Unreleased
+## 0.0.3 - Unreleased
+
+### Patch fixes
+
+- Successful organization and space deletions revoke grants for the deleted scopes, including an organization's descendant spaces.
+- Replay historical deletions before the API accepts requests, and reconcile later content-service deletions through a durable content-log projection.
+- Retry failed grant cleanup through content-log catch-up or restart without losing the pending deletion event.
+
+### Packages and source set
+
+- Use core and all 20 monorepo packages at 0.0.3, with official plugin and template releases at 0.0.3.
+- Pin the published component commits, Git trees, release links, and verified metadata checksums in `component-releases.json`.
+- Declare and verify plugin platform/SDK compatibility as `>=0.0.1 <0.0.4`, covering core 0.0.1, 0.0.2, and 0.0.3.
+- Update distribution metadata, deployment image defaults, build examples, and the generated compatibility matrix for 0.0.3.
+- Adapt the theme asset snapshot and supported change-request browser fixture to the new versions.
+
+Container source pins, image acceptance, and publication follow the frozen source archive in separately reviewed steps. npm packages remain private and unpublished.
+
+## 0.0.2 - 2026-11-08
 
 ### Patch fixes
 

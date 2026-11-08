@@ -34,20 +34,20 @@ organization does not use under Settings, Plugins.
 ## Build the image
 
 The prebuilt image needs no source checkout. Once the release includes
-`container-0.0.2.json`, download `compose.small.yaml` from the same release and
+`container-0.0.3.json`, download `compose.small.yaml` from the same release and
 run `docker compose -f compose.small.yaml pull`. The default image is
-`ghcr.io/docleus/docleus:0.0.2`; the container record's `reference` pins its digest.
+`ghcr.io/docleus/docleus:0.0.3`; the container record's `reference` pins its digest.
 
-To build locally, download the complete `docleus-0.0.2-sources.tar.gz` release
+To build locally, download the complete `docleus-0.0.3-sources.tar.gz` release
 asset and verify it against `SHA256SUMS`. GitHub's automatic source archives
 contain only this repository and cannot build the image. Extract the complete
 asset, then run from its root, where every repository sits side by side:
 
 ```sh
-docker build -f docleus/Dockerfile -t docleus:0.0.2 .
+docker build -f docleus/Dockerfile -t docleus:0.0.3 .
 # behind a registry mirror:
-docker build -f docleus/Dockerfile --build-arg NPM_REGISTRY=https://registry.npmmirror.com -t docleus:0.0.2 .
-export DOCLEUS_IMAGE=docleus:0.0.2
+docker build -f docleus/Dockerfile --build-arg NPM_REGISTRY=https://registry.npmmirror.com -t docleus:0.0.3 .
+export DOCLEUS_IMAGE=docleus:0.0.3
 cd docleus
 ```
 
@@ -66,16 +66,18 @@ checksum, distribution source commit, and Node base image digest. The workflow
 downloads that archive from the matching release, so current sibling branches
 cannot change the release's product sources.
 
-`container-release.json` now pins the published `0.0.2` complete source archive
-and its exact distribution source commit. The workflow commit can advance to
-record those pins while the product sources remain frozen in that archive.
-The pinned Node base image is unchanged. Image validation and publication still
-require their own explicitly approved workflow runs.
+`container-release.json` still pins the published `0.0.2` complete source archive
+and its exact distribution source commit. Its `0.0.3` replacement requires the
+merged distribution preparation commit and the final complete source-archive
+checksum in a separately reviewed change. Until then, the workflow targets
+`0.0.2`. The pinned Node base image is unchanged. Image validation and publication
+still require their own explicitly approved workflow runs.
 
-Native Linux AMD64 and ARM64 runners each build an image, run the small Compose
-smoke including restart persistence, and push the tested image under a candidate
-tag. Only after both pass does the workflow assemble `ghcr.io/docleus/docleus:0.0.2`.
-It uploads `container-0.0.2.json`, Compose files, `default.env.example`, and
+With matching `0.0.3` source pins, native Linux AMD64 and ARM64 runners each build
+an image, run the small Compose smoke including restart persistence, and push the
+tested image under a candidate tag. Only after both pass does the workflow assemble
+`ghcr.io/docleus/docleus:0.0.3`.
+It uploads `container-0.0.3.json`, Compose files, `default.env.example`, and
 `container-SHA256SUMS` to the release. The original source assets stay unchanged.
 The workflow refuses to replace an existing container record. Release metadata
 records the source commit and the separate workflow commit.

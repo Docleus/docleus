@@ -1,6 +1,6 @@
 {
-  "version": "0.0.4",
-  "sourceSha256": "e03865b3e813e3d0bba30da62d1cd419a46cb0d988c199d01239675477112c1f",
-  "sourceCommit": "2636b8e0e0cd9dff058d1bc5c846497c4da8d7d7",
+  "version": "0.0.5",
+  "sourceSha256": "3ce6c32e2a7b9d3aeed13f08b69ac366736b458c6275dfb4980d65a2090c9c13",
+  "sourceCommit": "46c2193d991af1552983207639e602fc669bed0a",
   "nodeImage": "node:24-alpine@sha256:8a32c8cf649a49915a66e81e7a609223c708d0adabf288ee3f4077d765542f85"
 }

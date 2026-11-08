@@ -1,5 +1,5 @@
 # Build from a workspace root, which holds every repository side by side:
-#   docker build -f docleus/Dockerfile -t docleus:0.0.3 .
+#   docker build -f docleus/Dockerfile -t docleus:0.0.4 .
 # The plugins link to core's packages (link:../docleus-core/packages/*), so the image
 # keeps the same layout under /opt/docleus. The build stage installs every
 # dependency and builds; the runtime stage gets only what the server runs.

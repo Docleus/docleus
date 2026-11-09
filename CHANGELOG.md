@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.0.10 - Unreleased
+## 0.0.10 - 2026-11-10
 
 ### Patch fixes
 

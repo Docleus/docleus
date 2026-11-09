@@ -1,6 +1,6 @@
 {
   "formatVersion": 1,
-  "distributionVersion": "0.0.8",
+  "distributionVersion": "0.0.9",
   "components": [
     {
       "repository": "Docleus/docleus-core",
@@ -85,12 +85,12 @@
     },
     {
       "repository": "Docleus/docleus-plugin-blobs-s3",
-      "version": "0.0.8",
-      "tag": "v0.0.8",
-      "sourceCommit": "d607ff24489a0838b4ec799306fe2ec3074c7fcd",
-      "sourceTree": "ee477dffbc35fe9b33fc1fa55c791041457ef1fd",
-      "releaseUrl": "https://github.com/Docleus/docleus-plugin-blobs-s3/releases/tag/v0.0.8",
-      "componentMetadataSha256": "162e8b786868aae968d8abe33c00eba36004f32ee354462b4ccf98604cf7a3e6"
+      "version": "0.0.9",
+      "tag": "v0.0.9",
+      "sourceCommit": "245222a3d0e374eb4aaa1aabf42ed9ec08bc4255",
+      "sourceTree": "4e9a3e19d910ed9b658a35613cc6310d3b2795cd",
+      "releaseUrl": "https://github.com/Docleus/docleus-plugin-blobs-s3/releases/tag/v0.0.9",
+      "componentMetadataSha256": "fb1c46f77decb024d37aff64d28f064f89c3e386fc153a18c5f8eaa9ccf21d9c"
     },
     {
       "repository": "Docleus/docleus-plugin-mermaid",

@@ -17,7 +17,7 @@ relying on a development build's size.
 | `compose.small.yaml`                    | One container: SQLite and local files in a volume                                   |
 | `compose.yaml`                          | Postgres and an S3-compatible store (`docleus-plugin-blobs-s3`)                     |
 | `Caddyfile.example`                     | TLS reverse proxy                                                                   |
-| `.env.example`                          | Settings for the compose files                                                      |
+| `.env.example`                          | Settings for the compose files; released as `default.env.example`                    |
 | `scripts/smoke.mjs`                     | End-to-end smoke test of a compose file                                             |
 | `tests/e2e/`, `playwright.config.ts`    | Browser test of the whole product against the default bundle                        |
 | `COMPATIBILITY.md`                      | The plugins checked against this core, written by the maintainers' `scripts/compat` |
@@ -109,14 +109,17 @@ Open `http://localhost:3000/setup`, enter the token and create the first admin. 
 
 ## Standard deployment
 
-Download `compose.yaml` and `default.env.example` from the release. Copy the
-downloaded environment template to `.env`. From a source checkout, the same
-template is named `.env.example`:
+Download `compose.yaml` and `default.env.example` from the same release, then
+copy the downloaded environment template to `.env`:
 
 ```sh
-cp .env.example .env    # set POSTGRES_PASSWORD, S3_ACCESS_KEY, S3_SECRET_KEY, S3_SIGNING_SECRET
+cp default.env.example .env
+# Set POSTGRES_PASSWORD, S3_ACCESS_KEY, S3_SECRET_KEY and S3_SIGNING_SECRET in .env.
 docker compose up -d
 ```
+
+From a source checkout, the template is named `.env.example`; use
+`cp .env.example .env` before setting the same variables and starting Compose.
 
 Docleus connects to Postgres through `DOCLEUS_DATABASE_URL` and stores blobs in the bucket `S3_BUCKET`, which the `s3-bucket` service creates. The bundled S3 server is a placeholder; to use AWS S3, R2 or another store, remove the `s3` and `s3-bucket` services and set `S3_ENDPOINT`, `S3_REGION` and the credentials. Postgres is not backed up automatically; use `pg_dump`.
 
@@ -202,7 +205,7 @@ Plugins installed at runtime stay installed across upgrades. If one's `engines.d
 
 ```sh
 node scripts/smoke.mjs                       # compose.small.yaml on port 3900
-node scripts/smoke.mjs --file compose.yaml   # needs the variables of .env.example
+node scripts/smoke.mjs --file compose.yaml   # needs the standard deployment variables in .env
 ```
 
 It starts the compose file under its own project name, creates the admin with the setup token, an organization, a space and a page (through a change request), publishes a site, checks the page is served, restarts the container, checks that the publication and admin session survive, and removes the project with its volumes (`--keep` leaves it running).

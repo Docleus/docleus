@@ -1,6 +1,21 @@
 # Changelog
 
-## 0.0.8 - Unreleased
+## 0.0.9 - Unreleased
+
+### Patch fixes
+
+- Verify S3 read-token expiry with the injected service clock while preserving token encoding, HMAC checks and the existing expiry boundary.
+
+### Packages and source set
+
+- Use core and all twenty core packages at 0.0.8, with the exact official plugin/template versions in `component-releases.json`.
+- Pin actual component commits, Git trees, release URLs and verified metadata checksums.
+- Record verified plugin platform/SDK ranges: `>=0.0.1 <0.0.9`.
+- Update distribution metadata, Compose/image defaults, build examples and the generated compatibility matrix for 0.0.9.
+
+Container source pins and native image acceptance/publication follow the frozen source archive. npm packages remain private and unpublished.
+
+## 0.0.8 - 2026-11-09
 
 ### Patch fixes
 

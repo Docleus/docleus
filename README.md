@@ -28,7 +28,7 @@
 </p>
 
 > [!IMPORTANT]
-> Docleus `0.0.9` is a patch preview. SDK extension points are experimental. Packages remain private; deployment does not require npm packages.
+> Docleus `0.0.10` is a patch preview. SDK extension points are experimental. Packages remain private; deployment does not require npm packages.
 
 <img src="./assets/editor.png" alt="The Docleus block editor with a page tree, change requests, and live publishing" width="100%" />
 
@@ -84,11 +84,11 @@ running from source, building plugins, the SDK, testing, and packaging.
 - Docker with Compose v2.
 - No source checkout or local Node.js installation is required for the prebuilt image.
 
-Download the small deployment from the [0.0.9 release](https://github.com/Docleus/docleus/releases/tag/v0.0.9) once it includes the container record and Compose attachments, then start the image:
+Download the small deployment from the [0.0.10 release](https://github.com/Docleus/docleus/releases/tag/v0.0.10) once it includes the container record and Compose attachments, then start the image:
 
 ```sh
 mkdir docleus && cd docleus
-curl -fLO https://github.com/Docleus/docleus/releases/download/v0.0.9/compose.small.yaml
+curl -fLO https://github.com/Docleus/docleus/releases/download/v0.0.10/compose.small.yaml
 docker compose -f compose.small.yaml pull
 docker compose -f compose.small.yaml up -d
 docker compose -f compose.small.yaml logs docleus
@@ -96,8 +96,8 @@ docker compose -f compose.small.yaml logs docleus
 
 Open [http://localhost:3000/setup](http://localhost:3000/setup) and enter the setup token printed in the container logs. The small deployment uses one container, SQLite, and local files in the `docleus-data` volume. Keep the setup token private.
 
-The container delivery target is `ghcr.io/docleus/docleus:0.0.9` for Linux AMD64
-and ARM64. Use it once the release includes `container-0.0.9.json` and the Compose
+The container delivery target is `ghcr.io/docleus/docleus:0.0.10` for Linux AMD64
+and ARM64. Use it once the release includes `container-0.0.10.json` and the Compose
 attachments; the source preview can be published before those assets. The
 container record supplies the exact image digest, source checksum, platforms,
 and build run. For a fixed deployment, set `DOCLEUS_IMAGE` to its `reference`
@@ -109,8 +109,8 @@ not available or when developing the platform.
 The standard compose file uses Postgres and an S3-compatible store:
 
 ```sh
-curl -fLO https://github.com/Docleus/docleus/releases/download/v0.0.9/compose.yaml
-curl -fLO https://github.com/Docleus/docleus/releases/download/v0.0.9/default.env.example
+curl -fLO https://github.com/Docleus/docleus/releases/download/v0.0.10/compose.yaml
+curl -fLO https://github.com/Docleus/docleus/releases/download/v0.0.10/default.env.example
 cp default.env.example .env
 # Set POSTGRES_PASSWORD, S3_ACCESS_KEY, S3_SECRET_KEY, and S3_SIGNING_SECRET.
 docker compose up -d
@@ -197,7 +197,7 @@ OIDC and S3 are included but disabled until configured. Verify the exact core an
 
 ## Status
 
-The first `0.0.1` preview was released on November 3, 2026. Patch `0.0.9` verifies S3 read-token expiry with the injected service clock while preserving token encoding, HMAC checks and the existing expiry boundary. Container delivery is recorded separately in the release's container assets.
+The first `0.0.1` preview was released on November 3, 2026. Patch `0.0.10` prepares consistent environment-template filenames for release downloads and source checkouts, with matching deployment commands and Compose guidance. Container delivery is recorded separately in the release's container assets.
 
 Git Sync, a stable plugin SDK, collections, AI/MCP features, and visitor-aware
 publishing are planned for later phases. Roadmap details will be published in

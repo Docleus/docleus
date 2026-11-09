@@ -1,6 +1,6 @@
 {
   "formatVersion": 1,
-  "distributionVersion": "0.0.9",
+  "distributionVersion": "0.0.10",
   "components": [
     {
       "repository": "Docleus/docleus-core",

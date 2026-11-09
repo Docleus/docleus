@@ -1,6 +1,6 @@
 {
   "formatVersion": 1,
-  "distributionVersion": "0.0.7",
+  "distributionVersion": "0.0.8",
   "components": [
     {
       "repository": "Docleus/docleus-core",
@@ -58,12 +58,12 @@
     },
     {
       "repository": "Docleus/docleus-plugin-change-requests",
-      "version": "0.0.8",
-      "tag": "v0.0.8",
-      "sourceCommit": "dc434a7534bbbc6d415271da577aa7e849989bc5",
-      "sourceTree": "bd1f3b4c81bbe9004895685c248b61c71537c3ea",
-      "releaseUrl": "https://github.com/Docleus/docleus-plugin-change-requests/releases/tag/v0.0.8",
-      "componentMetadataSha256": "cc80deec934af18072a3051c90500f83bede7e377d2ff431779b53af5e1bf094"
+      "version": "0.0.9",
+      "tag": "v0.0.9",
+      "sourceCommit": "6ac3431ad02a0a91a4d5308ab2af0d7b913e921a",
+      "sourceTree": "05cec2b807d864a37d21fcc1a38148ea43ee496d",
+      "releaseUrl": "https://github.com/Docleus/docleus-plugin-change-requests/releases/tag/v0.0.9",
+      "componentMetadataSha256": "138f873d4653d2ce6ea9836a80200bff334a233728a1ab85a29f3201061ad2d0"
     },
     {
       "repository": "Docleus/docleus-plugin-collab",

@@ -11,7 +11,7 @@ Core 0.0.8. "Ranges" checks the manifest's `engines.docleus` against the platfor
 | `@docleus/plugin-editor`            | 0.0.8   | `>=0.0.1 <0.0.9`  | `>=0.0.1 <0.0.9`    | yes    | yes   |
 | `@docleus/plugin-theme-default`     | 0.0.8   | `>=0.0.1 <0.0.9`  | `>=0.0.1 <0.0.9`    | yes    | yes   |
 | `@docleus/plugin-auth-oidc`         | 0.0.8   | `>=0.0.1 <0.0.9`  | `>=0.0.1 <0.0.9`    | yes    | yes   |
-| `@docleus/plugin-change-requests`   | 0.0.8   | `>=0.0.1 <0.0.9`  | `>=0.0.1 <0.0.9`    | yes    | yes   |
+| `@docleus/plugin-change-requests`   | 0.0.9   | `>=0.0.1 <0.0.9`  | `>=0.0.1 <0.0.9`    | yes    | yes   |
 | `@docleus/plugin-collab`            | 0.0.8   | `>=0.0.1 <0.0.9`  | `>=0.0.1 <0.0.9`    | yes    | yes   |
 | `@docleus/plugin-search-db`         | 0.0.8   | `>=0.0.1 <0.0.9`  | `>=0.0.1 <0.0.9`    | yes    | yes   |
 | `@docleus/plugin-blobs-s3`          | 0.0.8   | `>=0.0.1 <0.0.9`  | `>=0.0.1 <0.0.9`    | yes    | yes   |

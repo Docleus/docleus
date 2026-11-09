@@ -1,6 +1,6 @@
 {
   "name": "docleus",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "private": true,
   "type": "module",
   "description": "Docleus distribution: Docker image, compose templates and the default plugin set.",
@@ -14,7 +14,7 @@
   },
   "scripts": {
     "serve": "pnpm --dir ../docleus-core docleus serve --bundle ../docleus/bundle.yaml",
-    "image": "docker build -f Dockerfile -t docleus:0.0.7 ..",
+    "image": "docker build -f Dockerfile -t docleus:0.0.8 ..",
     "smoke": "node scripts/smoke.mjs",
     "e2e": "playwright test",
     "test": "node --test tests/*.test.mjs",

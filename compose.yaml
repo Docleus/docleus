@@ -1,5 +1,7 @@
 # Standard deployment: Postgres and an S3-compatible object store.
-#   cp .env.example .env   # then set the secrets
+# Release download: cp default.env.example .env
+# Source checkout: cp .env.example .env
+# Set the secrets in .env, then run:
 #   docker compose up -d
 services:
   docleus:

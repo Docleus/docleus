@@ -37,7 +37,7 @@ services:
       - docleus-data:/data
 
   postgres:
-    image: postgres:17-alpine
+    image: ${POSTGRES_IMAGE:-postgres:17-alpine@sha256:3540c0362c809df084ffac0ae69fe794515f9de92692f02178bcdce0ef0302ac}
     restart: unless-stopped
     environment:
       POSTGRES_USER: docleus
@@ -51,11 +51,10 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
-  # TODO(S4): settle the S3 server image. RustFS is a placeholder; any
-  # S3-compatible store works, or drop this service and point S3_ENDPOINT
-  # at AWS S3, R2 or another hosted store.
+  # The bundled store is pinned; S3_IMAGE can select another RustFS build.
+  # For hosted storage, remove this service and set S3_ENDPOINT.
   s3:
-    image: ${S3_IMAGE:-rustfs/rustfs:latest}
+    image: ${S3_IMAGE:-rustfs/rustfs:1.0.4@sha256:ed9210d6411d77ffceb70d94b964a3cb7d225983368bc25bebe01e995293dcc2}
     restart: unless-stopped
     environment:
       RUSTFS_ACCESS_KEY: ${S3_ACCESS_KEY:?set S3_ACCESS_KEY}

@@ -96,3 +96,17 @@ test("Compose can start from a registry image without sibling sources", () => {
       .includes(`DOCLEUS_IMAGE=${image}`),
   );
 });
+
+test("standard storage images have immutable defaults and explicit overrides", () => {
+  const source = readFileSync(join(root, "compose.yaml"), "utf8");
+  for (const name of ["POSTGRES_IMAGE", "S3_IMAGE"]) {
+    const image = new RegExp(`image: \\$\\{${name}:-(.+)\\}`).exec(source)?.[1];
+    assert.match(image ?? "", /@sha256:[a-f0-9]{64}$/);
+    assert.doesNotMatch(image, /:latest(?:@|$)/);
+    assert.ok(
+      readFileSync(join(root, ".env.example"), "utf8").includes(
+        `# ${name}=${image}`,
+      ),
+    );
+  }
+});

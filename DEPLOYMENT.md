@@ -121,7 +121,7 @@ docker compose up -d
 From a source checkout, the template is named `.env.example`; use
 `cp .env.example .env` before setting the same variables and starting Compose.
 
-Docleus connects to Postgres through `DOCLEUS_DATABASE_URL` and stores blobs in the bucket `S3_BUCKET`, which the `s3-bucket` service creates. The bundled S3 server is a placeholder; to use AWS S3, R2 or another store, remove the `s3` and `s3-bucket` services and set `S3_ENDPOINT`, `S3_REGION` and the credentials. Postgres is not backed up automatically; use `pg_dump`.
+Docleus connects to Postgres through `DOCLEUS_DATABASE_URL` and stores blobs in the bucket `S3_BUCKET`, which the `s3-bucket` service creates. The bundled Postgres 17 and RustFS 1.0.4 images are pinned by digest; `POSTGRES_IMAGE` and `S3_IMAGE` can select another build. To use AWS S3, R2 or another store, remove the `s3` and `s3-bucket` services and set `S3_ENDPOINT`, `S3_REGION` and the credentials. Postgres is not backed up automatically; use `pg_dump`.
 
 ## Configuration
 

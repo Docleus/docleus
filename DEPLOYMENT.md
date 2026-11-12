@@ -34,20 +34,20 @@ organization does not use under Settings, Plugins.
 ## Build the image
 
 The prebuilt image needs no source checkout. Once the release includes
-`container-0.0.10.json`, download `compose.small.yaml` from the same release and
+`container-0.0.11.json`, download `compose.small.yaml` from the same release and
 run `docker compose -f compose.small.yaml pull`. The default image is
-`ghcr.io/docleus/docleus:0.0.10`; the container record's `reference` pins its digest.
+`ghcr.io/docleus/docleus:0.0.11`; the container record's `reference` pins its digest.
 
-To build locally, download the complete `docleus-0.0.10-sources.tar.gz` release
+To build locally, download the complete `docleus-0.0.11-sources.tar.gz` release
 asset and verify it against `SHA256SUMS`. GitHub's automatic source archives
 contain only this repository and cannot build the image. Extract the complete
 asset, then run from its root, where every repository sits side by side:
 
 ```sh
-docker build -f docleus/Dockerfile -t docleus:0.0.10 .
+docker build -f docleus/Dockerfile -t docleus:0.0.11 .
 # behind a registry mirror:
-docker build -f docleus/Dockerfile --build-arg NPM_REGISTRY=https://registry.npmmirror.com -t docleus:0.0.10 .
-export DOCLEUS_IMAGE=docleus:0.0.10
+docker build -f docleus/Dockerfile --build-arg NPM_REGISTRY=https://registry.npmmirror.com -t docleus:0.0.11 .
+export DOCLEUS_IMAGE=docleus:0.0.11
 cd docleus
 ```
 
@@ -67,16 +67,18 @@ downloads that archive from the matching release, so current sibling branches
 cannot change the release's product sources.
 
 `container-release.json` pins the published `0.0.10` complete source archive
-and its exact distribution source commit. The workflow commit can advance to
+and its exact distribution source commit. Before validating `0.0.11`,
+replace those pins with the checksum and distribution commit from its
+published complete source archive. The workflow commit can advance to
 record those pins while the product sources remain frozen in that archive.
 The pinned Node base image is unchanged. Image validation and publication use
 separate workflow runs after review of the source and publication scope.
 
-With matching `0.0.10` source pins, native Linux AMD64 and ARM64 runners each build
+With matching `0.0.11` source pins, native Linux AMD64 and ARM64 runners each build
 an image, run the small Compose smoke including restart persistence, and push the
 tested image under a candidate tag. Only after both pass does the workflow assemble
-`ghcr.io/docleus/docleus:0.0.10`.
-It uploads `container-0.0.10.json`, Compose files, `default.env.example`, and
+`ghcr.io/docleus/docleus:0.0.11`.
+It uploads `container-0.0.11.json`, Compose files, `default.env.example`, and
 `container-SHA256SUMS` to the release. The original source assets stay unchanged.
 The workflow refuses to replace an existing container record. Release metadata
 records the source commit and the separate workflow commit.
@@ -200,6 +202,8 @@ docker compose -f compose.small.yaml up -d --force-recreate
 Migrations run at boot. To run them without serving, for example before starting several containers, run `docker compose -f compose.small.yaml run --rm docleus migrate`, which migrates the database and the content of every space, then exits. When the platform version or the set of plugin versions changed since the last boot, a SQLite database is first copied to `/data/backups/docleus-<timestamp>.db`; to go back, stop the container, put that copy in place of `docleus.db` and start the previous image. Postgres is not backed up automatically: run `pg_dump` before upgrading.
 
 Plugins installed at runtime stay installed across upgrades. If one's `engines.docleus` range excludes the new platform version, the instance refuses to start (`plugin/engines-mismatch`): upgrade or uninstall that plugin first, or remove its row from `docleus.yaml`.
+
+Before upgrading to distribution `0.0.11` (core/SDK `0.0.9`), update runtime-installed official plugins to `0.0.9`, except change requests and S3 blobs to `0.0.10`. These patches declare matching platform and SDK ranges of `>=0.0.1 <0.0.10` and retain support for core/SDK `0.0.1` through `0.0.9`. Earlier official declarations exclude core `0.0.9`. Custom plugins need both declarations to include the new platform and SDK versions.
 
 ## Smoke test
 

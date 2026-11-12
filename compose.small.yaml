@@ -3,7 +3,7 @@
 # DOCLEUS_IMAGE can pin an image digest or select a local source build.
 services:
   docleus:
-    image: ${DOCLEUS_IMAGE:-ghcr.io/docleus/docleus:0.0.10}
+    image: ${DOCLEUS_IMAGE:-ghcr.io/docleus/docleus:0.0.11}
     init: true
     restart: unless-stopped
     ports:

@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.0.11 - Unreleased
+
+### Patch fixes
+
+- Wait for the dependent sites service and instance API after configured storage providers are mounted, so instance creation returns only after both have initialized.
+- Add a PostgreSQL CI job for core's database-backed tests.
+- Pin the tested PostgreSQL and RustFS image digests in the standard Compose deployment, with `POSTGRES_IMAGE` and `S3_IMAGE` overrides.
+
+### Packages and source set
+
+- Use core and all twenty core packages at 0.0.9.
+- Use official plugins and template at 0.0.9, except change requests and S3 blobs at 0.0.10.
+- Declare matching plugin platform and SDK peer ranges of `>=0.0.1 <0.0.10`.
+- Update distribution metadata, deployment image defaults and build examples for 0.0.11.
+
+Component source commits, Git trees, release URLs and metadata checksums are pinned from the published component releases and verified downloads. Container pins and native image acceptance follow the frozen source archive. npm packages remain private and unpublished.
+
 ## 0.0.10 - 2026-11-10
 
 ### Patch fixes

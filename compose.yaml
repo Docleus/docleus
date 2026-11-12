@@ -5,7 +5,7 @@
 #   docker compose up -d
 services:
   docleus:
-    image: ${DOCLEUS_IMAGE:-ghcr.io/docleus/docleus:0.0.10}
+    image: ${DOCLEUS_IMAGE:-ghcr.io/docleus/docleus:0.0.11}
     init: true
     restart: unless-stopped
     depends_on:
@@ -64,7 +64,7 @@ services:
 
   # Creates the bucket once; docleus-plugin-blobs-s3 expects it to exist.
   s3-bucket:
-    image: ${DOCLEUS_IMAGE:-ghcr.io/docleus/docleus:0.0.10}
+    image: ${DOCLEUS_IMAGE:-ghcr.io/docleus/docleus:0.0.11}
     depends_on:
       - s3
     entrypoint: ["node", "/opt/docleus/docleus/docker/create-bucket.mjs"]

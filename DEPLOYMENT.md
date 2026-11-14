@@ -66,11 +66,9 @@ checksum, distribution source commit, and Node base image digest. The workflow
 downloads that archive from the matching release, so current sibling branches
 cannot change the release's product sources.
 
-`container-release.json` pins the published `0.0.10` complete source archive
-and its exact distribution source commit. Before validating `0.0.11`,
-replace those pins with the checksum and distribution commit from its
-published complete source archive. The workflow commit can advance to
-record those pins while the product sources remain frozen in that archive.
+`container-release.json` pins the published `0.0.11` complete source archive
+and its exact distribution source commit. The workflow commit records those
+pins while the product sources remain frozen in that archive.
 The pinned Node base image is unchanged. Image validation and publication use
 separate workflow runs after review of the source and publication scope.
 

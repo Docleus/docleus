@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.0.12 - 2026-11-27
+
+### Patch fixes
+
+- Serialize editor saves, drain edits made during a pending write, and report failures after leaving.
+- Require durable collaborative snapshots before merge, rebase and conflict previews.
+- Collect only unchanged blob generations; retain S3 candidates when safe conditional deletion is unavailable.
+- Apply database projections and cursor updates in one transaction across processes, with nested savepoints and early SQLite write locks.
+- Resolve site export configuration, database, plugins and blob secret like serve and migrate.
+- Resume interrupted close cleanup and protect later branch edits with conditional branch removal.
+- Make database lease renewal tests independent of CI scheduling.
+
+### Components and upgrade
+
+- Use core/SDK and all twenty core packages at 0.0.10.
+- Use official plugins/template at 0.0.10, except change requests and S3 blobs at 0.0.11.
+- Require core 0.0.10 for collaboration, change requests, search and S3 blobs; retain earlier declared compatibility for the other seven components.
+- Record exact component source commits and checksums in component-releases.json; source and container delivery follow their independently verified artifacts.
+- See DEPLOYMENT.md for runtime plugin overrides, consistent backups and S3 orphan-retention guidance. Packages remain private and unpublished on npm.
+
 ## 0.0.11 - 2026-11-13
 
 ### Patch fixes

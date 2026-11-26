@@ -9,18 +9,18 @@ relying on a development build's size.
 
 ## Contents
 
-| File                                    | Purpose                                                                             |
-| --------------------------------------- | ----------------------------------------------------------------------------------- |
-| `package.json`                          | The platform and default plugin packages linked from the side-by-side checkout      |
-| `bundle.yaml`                           | The default plugin rows                                                             |
-| `Dockerfile`, `Dockerfile.dockerignore` | The image, built from a side-by-side workspace root                                 |
-| `compose.small.yaml`                    | One container: SQLite and local files in a volume                                   |
-| `compose.yaml`                          | Postgres and an S3-compatible store (`docleus-plugin-blobs-s3`)                     |
-| `Caddyfile.example`                     | TLS reverse proxy                                                                   |
-| `.env.example`                          | Settings for the compose files; released as `default.env.example`                    |
-| `scripts/smoke.mjs`                     | End-to-end smoke test of a compose file                                             |
-| `tests/e2e/`, `playwright.config.ts`    | Browser test of the whole product against the default bundle                        |
-| `COMPATIBILITY.md`                      | The plugins checked against this core, written by the maintainers' `scripts/compat` |
+| File                                    | Purpose                                                                                |
+| --------------------------------------- | -------------------------------------------------------------------------------------- |
+| `package.json`                          | The platform and default plugin packages linked from the side-by-side checkout         |
+| `bundle.yaml`                           | The default plugin rows                                                                |
+| `Dockerfile`, `Dockerfile.dockerignore` | The image, built from a side-by-side workspace root                                    |
+| `compose.small.yaml`                    | One container: SQLite and local files in a volume                                      |
+| `compose.yaml`                          | Postgres and an S3-compatible store (`docleus-plugin-blobs-s3`)                        |
+| `Caddyfile.example`                     | TLS reverse proxy                                                                      |
+| `.env.example`                          | Settings for the compose files; released as `default.env.example`                      |
+| `scripts/smoke.mjs`                     | End-to-end smoke test of a compose file                                                |
+| `tests/e2e/`, `playwright.config.ts`    | Browser test of the whole product against the default bundle                           |
+| `COMPATIBILITY.md`                      | The plugins checked against this core, written by the maintainers' `scripts/compat`    |
 | `component-releases.json`               | Exact component release commits, Git trees, and metadata checksums for this source set |
 
 ## Default plugins
@@ -34,20 +34,20 @@ organization does not use under Settings, Plugins.
 ## Build the image
 
 The prebuilt image needs no source checkout. Once the release includes
-`container-0.0.11.json`, download `compose.small.yaml` from the same release and
+`container-0.0.12.json`, download `compose.small.yaml` from the same release and
 run `docker compose -f compose.small.yaml pull`. The default image is
-`ghcr.io/docleus/docleus:0.0.11`; the container record's `reference` pins its digest.
+`ghcr.io/docleus/docleus:0.0.12`; the container record's `reference` pins its digest.
 
-To build locally, download the complete `docleus-0.0.11-sources.tar.gz` release
+To build locally, download the complete `docleus-0.0.12-sources.tar.gz` release
 asset and verify it against `SHA256SUMS`. GitHub's automatic source archives
 contain only this repository and cannot build the image. Extract the complete
 asset, then run from its root, where every repository sits side by side:
 
 ```sh
-docker build -f docleus/Dockerfile -t docleus:0.0.11 .
+docker build -f docleus/Dockerfile -t docleus:0.0.12 .
 # behind a registry mirror:
-docker build -f docleus/Dockerfile --build-arg NPM_REGISTRY=https://registry.npmmirror.com -t docleus:0.0.11 .
-export DOCLEUS_IMAGE=docleus:0.0.11
+docker build -f docleus/Dockerfile --build-arg NPM_REGISTRY=https://registry.npmmirror.com -t docleus:0.0.12 .
+export DOCLEUS_IMAGE=docleus:0.0.12
 cd docleus
 ```
 
@@ -72,11 +72,11 @@ pins while the product sources remain frozen in that archive.
 The pinned Node base image is unchanged. Image validation and publication use
 separate workflow runs after review of the source and publication scope.
 
-With matching `0.0.11` source pins, native Linux AMD64 and ARM64 runners each build
+With matching `0.0.12` source pins, native Linux AMD64 and ARM64 runners each build
 an image, run the small Compose smoke including restart persistence, and push the
 tested image under a candidate tag. Only after both pass does the workflow assemble
-`ghcr.io/docleus/docleus:0.0.11`.
-It uploads `container-0.0.11.json`, Compose files, `default.env.example`, and
+`ghcr.io/docleus/docleus:0.0.12`.
+It uploads `container-0.0.12.json`, Compose files, `default.env.example`, and
 `container-SHA256SUMS` to the release. The original source assets stay unchanged.
 The workflow refuses to replace an existing container record. Release metadata
 records the source commit and the separate workflow commit.
@@ -201,7 +201,11 @@ Migrations run at boot. To run them without serving, for example before starting
 
 Plugins installed at runtime stay installed across upgrades. If one's `engines.docleus` range excludes the new platform version, the instance refuses to start (`plugin/engines-mismatch`): upgrade or uninstall that plugin first, or remove its row from `docleus.yaml`.
 
-Before upgrading to distribution `0.0.11` (core/SDK `0.0.9`), update runtime-installed official plugins to `0.0.9`, except change requests and S3 blobs to `0.0.10`. These patches declare matching platform and SDK ranges of `>=0.0.1 <0.0.10` and retain support for core/SDK `0.0.1` through `0.0.9`. Earlier official declarations exclude core `0.0.9`. Custom plugins need both declarations to include the new platform and SDK versions.
+Distribution `0.0.12` uses core/SDK `0.0.10`. Official components are `0.0.10`, except change requests and S3 blobs at `0.0.11`. Collaboration, change requests, search and S3 blobs require `>=0.0.10 <0.0.11`; their repaired contracts are unavailable on earlier cores. Other official components retain `>=0.0.1 <0.0.11`.
+
+For the bundled plugins, upgrade the complete image together. Before replacing the image, stop every web/worker process and take consistent database, blob and deployment-config backups. Check runtime-installed official overrides in `docleus.yaml`: old `<0.0.10` declarations block boot. For a row using the same id as its bundled plugin, remove its `plugin`, `version`, `source` and `sha256` override fields while preserving `id`, `config` and `disabled`; the new image then supplies that plugin. Remove separately added duplicate official rows after retaining their settings. Do not boot an earlier core with the new versions of the four plugins that require `0.0.10`. Custom plugins must have validated platform and SDK ranges covering the new core. Validate the complete stopped deployment before migration; restore the backups and previous image to roll back.
+
+The S3 provider retains automatic garbage-collection candidates because portable S3 cannot guarantee deletion of an observed write generation. Monitor bucket growth. Reclamation must prove that blobs are unreferenced while every application writer is stopped; an age-only bucket lifecycle rule cannot determine whether an attachment is still used. Local-file collection uses generation checks coordinated through the shared database.
 
 ## Smoke test
 

@@ -34,20 +34,20 @@ organization does not use under Settings, Plugins.
 ## Build the image
 
 The prebuilt image needs no source checkout. Once the release includes
-`container-0.0.12.json`, download `compose.small.yaml` from the same release and
+`container-0.0.13.json`, download `compose.small.yaml` from the same release and
 run `docker compose -f compose.small.yaml pull`. The default image is
-`ghcr.io/docleus/docleus:0.0.12`; the container record's `reference` pins its digest.
+`ghcr.io/docleus/docleus:0.0.13`; the container record's `reference` pins its digest.
 
-To build locally, download the complete `docleus-0.0.12-sources.tar.gz` release
+To build locally, download the complete `docleus-0.0.13-sources.tar.gz` release
 asset and verify it against `SHA256SUMS`. GitHub's automatic source archives
 contain only this repository and cannot build the image. Extract the complete
 asset, then run from its root, where every repository sits side by side:
 
 ```sh
-docker build -f docleus/Dockerfile -t docleus:0.0.12 .
+docker build -f docleus/Dockerfile -t docleus:0.0.13 .
 # behind a registry mirror:
-docker build -f docleus/Dockerfile --build-arg NPM_REGISTRY=https://registry.npmmirror.com -t docleus:0.0.12 .
-export DOCLEUS_IMAGE=docleus:0.0.12
+docker build -f docleus/Dockerfile --build-arg NPM_REGISTRY=https://registry.npmmirror.com -t docleus:0.0.13 .
+export DOCLEUS_IMAGE=docleus:0.0.13
 cd docleus
 ```
 
@@ -61,22 +61,19 @@ the reviewed `main` commit. The default `publish: false` builds and tests both
 architectures without logging in to the registry, pushing images, uploading
 workflow artifacts, or changing a release. Set `publish: true` only after the
 publication has been explicitly approved; that run rebuilds and tests before
-publishing. `container-release.json` pins the approved source archive
-checksum, distribution source commit, and Node base image digest. The workflow
-downloads that archive from the matching release, so current sibling branches
-cannot change the release's product sources.
+publishing. `container-release.json` records the exact published source commit, archive checksum and base-image digest used by the container workflow. Its source pins are updated through a separate PR after the complete source archive is published and verified.
 
-`container-release.json` pins the published `0.0.12` complete source archive
+`container-release.json` pins the published `0.0.13` complete source archive
 and its exact distribution source commit. The workflow commit records those
 pins while the product sources remain frozen in that archive.
 The pinned Node base image is unchanged. Image validation and publication use
 separate workflow runs after review of the source and publication scope.
 
-With matching `0.0.12` source pins, native Linux AMD64 and ARM64 runners each build
+With matching `0.0.13` source pins, native Linux AMD64 and ARM64 runners each build
 an image, run the small Compose smoke including restart persistence, and push the
 tested image under a candidate tag. Only after both pass does the workflow assemble
-`ghcr.io/docleus/docleus:0.0.12`.
-It uploads `container-0.0.12.json`, Compose files, `default.env.example`, and
+`ghcr.io/docleus/docleus:0.0.13`.
+It uploads `container-0.0.13.json`, Compose files, `default.env.example`, and
 `container-SHA256SUMS` to the release. The original source assets stay unchanged.
 The workflow refuses to replace an existing container record. Release metadata
 records the source commit and the separate workflow commit.
@@ -203,9 +200,11 @@ Migrations run at boot. To run them without serving, for example before starting
 
 Plugins installed at runtime stay installed across upgrades. If one's `engines.docleus` range excludes the new platform version, the instance refuses to start (`plugin/engines-mismatch`): upgrade or uninstall that plugin first, or remove its row from `docleus.yaml`.
 
-Distribution `0.0.12` uses core/SDK `0.0.10`. Official components are `0.0.10`, except change requests and S3 blobs at `0.0.11`. Collaboration, change requests, search and S3 blobs require `>=0.0.10 <0.0.11`; their repaired contracts are unavailable on earlier cores. Other official components retain `>=0.0.1 <0.0.11`.
+Distribution `0.0.13` uses core/SDK `0.0.11`. Official components are `0.0.11`, except change requests and S3 blobs at `0.0.12`. CommonMark and change requests require `>=0.0.11 <0.0.12`. Collaboration, search and S3 blobs require `>=0.0.10 <0.0.12`. Other official components retain `>=0.0.1 <0.0.12`.
 
-For the bundled plugins, upgrade the complete image together. Before replacing the image, stop every web/worker process and take consistent database, blob and deployment-config backups. Check runtime-installed official overrides in `docleus.yaml`: old `<0.0.10` declarations block boot. For a row using the same id as its bundled plugin, remove its `plugin`, `version`, `source` and `sha256` override fields while preserving `id`, `config` and `disabled`; the new image then supplies that plugin. Remove separately added duplicate official rows after retaining their settings. Do not boot an earlier core with the new versions of the four plugins that require `0.0.10`. Custom plugins must have validated platform and SDK ranges covering the new core. Validate the complete stopped deployment before migration; restore the backups and previous image to roll back.
+Restart OIDC sign-ins that were already in progress before the upgrade. Collaborative edits stored by older versions without author information require an authorized editor to reopen and save the page before a merge or rebase can proceed. A failed save keeps edit mode open so the user can retry.
+
+For the bundled plugins, upgrade the complete image together. Before replacing the image, stop every web/worker process and take consistent database, blob and deployment-config backups. Check runtime-installed official overrides in `docleus.yaml`: old upper bounds below core `0.0.11` block boot. For a row using the same id as its bundled plugin, remove its `plugin`, `version`, `source` and `sha256` override fields while preserving `id`, `config` and `disabled`; the new image then supplies that plugin. Remove separately added duplicate official rows after retaining their settings. Do not boot an earlier core with the new versions of components whose declared minimum requires a newer core. Custom plugins must have validated platform and SDK ranges covering the new core. Validate the complete stopped deployment before migration; restore the backups and previous image to roll back.
 
 The S3 provider retains automatic garbage-collection candidates because portable S3 cannot guarantee deletion of an observed write generation. Monitor bucket growth. Reclamation must prove that blobs are unreferenced while every application writer is stopped; an age-only bucket lifecycle rule cannot determine whether an attachment is still used. Local-file collection uses generation checks coordinated through the shared database.
 

@@ -40,7 +40,9 @@ function oidcRow() {
     label: text("DOCLEUS_OIDC_LABEL") ?? "Single sign-on",
     issuer,
     clientId,
-    clientSecret: text("DOCLEUS_OIDC_CLIENT_SECRET"),
+    clientSecretEnv: text("DOCLEUS_OIDC_CLIENT_SECRET")
+      ? "DOCLEUS_OIDC_CLIENT_SECRET"
+      : undefined,
     scopes: scopes?.split(/[\s,]+/).filter(Boolean),
     signup: text("DOCLEUS_OIDC_SIGNUP"),
   });

@@ -72,3 +72,16 @@ test("an invalid variable stops the boot", () => {
     /DOCLEUS_TRUST_PROXY must be true or false/,
   );
 });
+
+test("keeps OIDC secrets in the environment and removes legacy persisted values", (t) => {
+  const data = mkdtempSync(join(tmpdir(), "docleus-oidc-env-"));
+  t.after(() => rmSync(data, { recursive: true, force: true }));
+  writeFileSync(join(data, "docleus.yaml"), `plugins:\n  - id: oidc\n    config:\n      sources:\n        - id: sso\n          label: Login\n          issuer: https://id.example\n          clientId: docs\n          clientSecret: old-test-secret\n`);
+  const config = boot(data, {
+    DOCLEUS_OIDC_ISSUER: "https://id.example",
+    DOCLEUS_OIDC_CLIENT_ID: "docs",
+    DOCLEUS_OIDC_CLIENT_SECRET: "new-test-secret",
+  });
+  assert.doesNotMatch(config, /old-test-secret|new-test-secret|clientSecret:/);
+  assert.match(config, /clientSecretEnv: DOCLEUS_OIDC_CLIENT_SECRET/);
+});

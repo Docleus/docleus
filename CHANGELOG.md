@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.0.13 - 2026-11-28
+
+### Patch fixes
+
+- Preserve pending collaborative body edits when page metadata changes.
+- Flush stored collaboration drafts after restart with author access checks, and reject unconvertible strict snapshots while retaining recoverable state.
+- Keep edit mode and drafts available after failed saves or plugin exit tasks.
+- Bind OIDC callbacks to the initiating browser and resolve confidential-client secrets from environment references.
+- Coordinate publication insertion and site deletion across database connections.
+- Preserve adjacent Markdown lists and renamed SUMMARY.md titles during export.
+- Use independent temporary files for concurrent boot-state writes and clean up failed replacements.
+- Make install-lease takeover tests independent of database scheduling.
+
+### Components and upgrade
+
+- Use core/SDK and all twenty core packages at 0.0.11.
+- Use official plugins/template at 0.0.11, except change requests and S3 blobs at 0.0.12.
+- Require core 0.0.11 for CommonMark and change requests. Keep independently verified compatibility ranges for other components.
+- Record exact published component sources and checksums in component-releases.json.
+- Restart older in-flight OIDC logins. Reopen and save legacy pending collaborative drafts before merging. Review historical configurations and backups containing inline OIDC secrets.
+- Complete source and versioned container delivery use separately verified artifacts. Packages remain private and unpublished on npm.
+
 ## 0.0.12 - 2026-11-27
 
 ### Patch fixes
